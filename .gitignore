@@ -218,3 +218,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# Modelos de Transcrição Whisper Local
+modelos/
+
+# FFMPEG Local
+ffmpeg*
