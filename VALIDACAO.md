@@ -1,35 +1,30 @@
-# Validação da entrega
+# Validação realizada
 
-Verificação executada em 18/10/2026, em Linux x64, com Python 3.11.17, Streamlit 1.50.0, openai-whisper 20250625 e PyTorch 2.14.1+cpu. O ambiente de verificação foi instalado com `uv`; a instalação documentada para Windows utiliza `venv` e `pip`.
+Ambiente: Linux, Python 3.12, Pillow 12.3.0, NumPy 2.3.5 e VTracer 0.6.15.
 
-## Resultados
+- 15 testes automatizados aprovados (`python -m unittest discover -s tests -v`).
+- Os quatro logotipos enviados foram convertidos pela CLI real do aplicativo.
+- As dimensões originais, as duas cores e o fundo transparente foram mantidos.
+- Cada resultado contém 28 caminhos SVG e nenhum elemento de imagem embutida.
+- As saídas foram renderizadas com CairoSVG e inspecionadas visualmente.
 
-- **24 testes automatizados passaram** (`python -m pytest -q`).
-- Compilação dos módulos Python concluída sem erros.
-- Verificação de compatibilidade das dependências concluída sem conflitos.
-- Servidor Streamlit iniciado em `127.0.0.1:8501`; página inicial e endpoint de saúde responderam HTTP 200.
-- Interface verificada com Streamlit AppTest: carregamento, opções, botão desabilitado sem entrada, erro de caminho inexistente, exibição de resultado, quatro downloads e limpeza de sessão.
-- FFmpeg real: MP4 com áudio decodificado em 16 kHz; vídeos sem áudio e arquivos corrompidos geraram mensagens de erro tratadas, antes de carregar um modelo.
-- Exportação: UTF-8, JSON válido, formatos SRT/VTT, avanço correto dos milissegundos para minuto/hora e trechos vazios.
-- Temporários: cópia de upload com nome controlado e exclusão mesmo após falha.
-- Integração simulada: seleção de CPU, idioma `pt`, tarefa `transcribe`, CUDA indisponível, memória insuficiente e bloqueio de transcrições simultâneas.
+| Entrada | Dimensões | Interseção/união da silhueta |
+| --- | --- | --- |
+| Horizontal_Azul.png | 2048 × 201 | 0,99065 |
+| Horizontal_Branco.png | 2047 × 200 | 0,99022 |
+| Vertical_Azul.png | 2048 × 610 | 0,99189 |
+| Vertical_Branco.png | 2048 × 610 | 0,99012 |
 
-## Transcrição com o modelo real
+A comparação usa máscaras de opacidade de pelo menos 50% na resolução original.
+Essa métrica avalia sobreposição de silhuetas; não mede fidelidade de fontes,
+exatidão colorimétrica nem garante equivalência em qualquer outra imagem.
 
-Foi criada uma amostra de fala sintética em português brasileiro com eSpeak NG, convertida para vídeo MP4 com áudio AAC. Duração decodificada: aproximadamente **7,66 segundos**. O sintetizador foi utilizado somente na verificação e não é dependência da aplicação.
+Os testes cobrem PNG inválido, conteúdo renomeado, pastas com extensão PNG,
+transparência total, APNG, limite de pixels, cores brancas e laranja, franjas de
+antialias, saída vetorial, rejeição de SVG com imagem, nomes com acentos,
+sobrescrita, preservação do arquivo anterior, limpeza de temporários, timeout e
+código de saída de falha na CLI.
 
-A CLI real foi executada com os modelos oficiais **tiny** e **small**, ambos em **CPU**, gerando TXT, SRT, VTT e JSON. No teste com `small`, foi habilitada a marcação por palavra; o JSON continha os tempos por palavra.
-
-Frase utilizada e reconhecida pelo modelo `small`:
-
-> Olá, bom dia. Este é um teste de transcrição de vídeo em português. A tecnologia ajuda as pessoas a trabalhar melhor.
-
-Essa amostra confirma o funcionamento do fluxo completo; não constitui um estudo de precisão ou de desempenho. O modelo `tiny` apresentou erros na mesma amostra, reforçando a necessidade de escolher o modelo e revisar o resultado.
-
-## Limites da verificação
-
-Não houve execução em Windows, GPU NVIDIA/CUDA ou macOS. Os scripts `.bat` foram revisados, mas precisam ser executados na máquina Windows do usuário para validação final. O caminho de GPU foi testado com simulações de disponibilidade e erro de memória, sem uma GPU física.
-
-A instalação direta do GitHub é oferecida como alternativa e não foi executada; foi validada a distribuição oficial `openai-whisper` com versão fixa. Vídeos longos, uploads próximos do limite de 1.024 MB, outros codecs e a precisão em gravações reais precisam ser avaliados com os arquivos do usuário.
-
-Os testes automatizados podem ser repetidos sem baixar pesos. Os modelos, ambientes virtuais e arquivos de verificação não fazem parte do ZIP.
+Os arquivos de imagem usados na validação não estão incluídos neste pacote.
+A interface gráfica e os arquivos `.bat` não foram executados no Windows nesta
+validação. Os testes de conversão foram executados pelo Python no Linux.

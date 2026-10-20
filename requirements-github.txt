@@ -1,4 +1,0 @@
-# Alternativa: instala o Whisper diretamente do repositório oficial.
-# Requer Git. Instala a revisão atual do repositório, sem pin de commit.
-streamlit==1.50.0
-git+https://github.com/openai/whisper.git

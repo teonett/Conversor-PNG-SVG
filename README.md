@@ -8,11 +8,14 @@ O fluxo foi pensado principalmente para **logotipos, ícones e ilustrações com
 >
 > **Windows: funcionamento confirmado pelo usuário.** A versão exata do Python usada nessa confirmação não foi informada. Os testes automatizados e as conversões de referência foram executados com Python 3.12 no Linux.
 
+> **Para abrir o aplicativo no Windows, execute `iniciar_windows.bat`.** Na preparação inicial, execute `instalar_windows.bat`, ative a `.venv` e atualize o `pip`. Nas próximas utilizações, abra diretamente pelo `iniciar_windows.bat`.
+
 ## Sumário
 
 - [Requisitos e versões do Python](#requisitos-e-versões-do-python)
 - [Por que manter Python 3.12 neste projeto?](#por-que-manter-python-312-neste-projeto)
 - [Instalação no Windows](#instalação-no-windows)
+- [Ativação do ambiente e atualização do pip](#ativação-do-ambiente-e-atualização-do-pip)
 - [Uso pela interface gráfica](#uso-pela-interface-gráfica)
 - [Qualidade, cores e transparência](#qualidade-cores-e-transparência)
 - [Uso pela linha de comando](#uso-pela-linha-de-comando)
@@ -29,18 +32,18 @@ O fluxo foi pensado principalmente para **logotipos, ícones e ilustrações com
 
 O requisito mínimo é determinado pelo conjunto de dependências fixado em `requirements.txt`. Neste pacote, o **NumPy 2.3.5 exige Python 3.11 ou superior**. Isso estabelece o mínimo técnico; não significa que todas as versões posteriores do Python tenham sido testadas com o aplicativo.
 
-| Item                      | Requisito ou orientação                                                        |
-| ------------------------- | ------------------------------------------------------------------------------ |
-| Python mínimo             | **CPython 3.11**                                                               |
-| Python recomendado        | **CPython 3.12 de 64 bits**, base usada na validação automatizada              |
-| Inicializador automático  | Procura Python **3.11** primeiro e, se não encontrar, tenta **3.12**           |
-| Python 3.10 ou anterior   | Incompatível com as dependências fixadas deste pacote                          |
-| Python 3.13 ou posterior  | Fora da validação deste projeto e da seleção atual do instalador automático    |
-| Ambiente principal de uso | Windows com Python e Tcl/Tk instalados                                         |
-| Interface gráfica         | Tkinter, componente do Python com suporte Tcl/Tk; não é instalado pelo `pip`   |
-| Processamento             | CPU; a conversão não depende de GPU                                            |
-| Conexão com a internet    | Necessária para baixar as dependências na instalação; dispensável na conversão |
-| Pasta de saída            | Deve permitir gravação; prefira uma pasta local em NTFS no Windows             |
+| Item | Requisito ou orientação |
+| --- | --- |
+| Python mínimo | **CPython 3.11** |
+| Python recomendado | **CPython 3.12 de 64 bits**, base usada na validação automatizada |
+| Inicializador automático | Procura Python **3.11** primeiro e, se não encontrar, tenta **3.12** |
+| Python 3.10 ou anterior | Incompatível com as dependências fixadas deste pacote |
+| Python 3.13 ou posterior | Fora da validação deste projeto e da seleção atual do instalador automático |
+| Ambiente principal de uso | Windows com Python e Tcl/Tk instalados |
+| Interface gráfica | Tkinter, componente do Python com suporte Tcl/Tk; não é instalado pelo `pip` |
+| Processamento | CPU; a conversão não depende de GPU |
+| Conexão com a internet | Necessária para baixar as dependências na instalação; dispensável na conversão |
+| Pasta de saída | Deve permitir gravação; prefira uma pasta local em NTFS no Windows |
 
 A memória necessária varia conforme a resolução, a qualidade e a quantidade de cores. A qualidade alta amplia as máscaras em quatro vezes na largura e na altura, criando **16 vezes mais pixels intermediários**. Não foi estabelecido um mínimo de RAM por benchmark; use os limites documentados adiante e reduza a qualidade quando necessário.
 
@@ -54,7 +57,7 @@ A recomendação tem motivos verificáveis, sem presumir que uma versão mais re
 
 1. **A aplicação foi testada nesse ambiente.** Os testes automatizados, o processamento dos logotipos e a inspeção das saídas foram realizados com Python 3.12. Trocar o interpretador altera uma parte do ambiente de execução, mesmo mantendo o mesmo código e `requirements.txt`.
 2. **O instalador atual só seleciona 3.11 e 3.12.** Se houver apenas Python 3.13 ou posterior, `instalar_windows.bat` não tentará utilizá-lo e exibirá a orientação para instalar uma das versões previstas. Essa restrição está no instalador; não comprova uma incompatibilidade do motor de conversão.
-3. **Há dependências com código nativo.** NumPy contém componentes compilados e o VTracer utiliza uma extensão nativa baseada em Rust. A instalação depende de pacotes binários, chamados _wheels_, compatíveis com o interpretador, o sistema operacional e a arquitetura. Fixar a versão da biblioteca não torna um binário válido para qualquer Python.
+3. **Há dependências com código nativo.** NumPy contém componentes compilados e o VTracer utiliza uma extensão nativa baseada em Rust. A instalação depende de pacotes binários, chamados *wheels*, compatíveis com o interpretador, o sistema operacional e a arquitetura. Fixar a versão da biblioteca não torna um binário válido para qualquer Python.
 4. **Compatibilidade de dependência não é validação do aplicativo.** Algumas dependências já publicam wheels para Python superiores, inclusive no Windows. Isso é favorável à migração, mas não substitui a verificação conjunta da interface, dos processos, dos nomes de arquivos, dos erros e do resultado vetorial.
 
 Portanto, a justificativa para não migrar automaticamente é **preservar o ambiente conhecido enquanto a nova combinação não foi testada**. Não foi demonstrado um defeito específico que impeça este conversor de funcionar em Python 3.13 ou 3.14. Também não se afirma que essas versões sejam menos seguras, mais lentas ou incapazes de instalar as dependências.
@@ -83,11 +86,49 @@ Depois dos testes automatizados, confira a abertura da interface, a seleção de
 1. Instale Python **3.11 ou 3.12 de 64 bits**, usando uma distribuição com **Python Launcher** e **Tcl/Tk**. O instalador oficial está em [Python para Windows](https://www.python.org/downloads/windows/).
 2. Extraia todo o pacote ZIP para uma pasta, por exemplo `C:\Projetos\Conversor_PNG_SVG`.
 3. Dentro dessa pasta, execute **`instalar_windows.bat`** e aguarde a conclusão.
-4. Execute **`iniciar_windows.bat`** para abrir o aplicativo.
+4. Abra um terminal na pasta do projeto, **ative a `.venv` e atualize o `pip`**, conforme a próxima seção.
+5. Execute **`iniciar_windows.bat`** para abrir o aplicativo.
 
 > **Execute o aplicativo a partir da pasta extraída.** Mantenha `converter_png_svg.py`, `requirements.txt` e a pasta `png_svg` juntos. Copiar somente o arquivo principal não é suficiente.
 
 O instalador cria uma pasta `.venv` no projeto e instala nela as dependências fixadas. O inicializador abre a interface com `pythonw.exe`, sem manter uma janela de terminal aberta.
+
+### Ativação do ambiente e atualização do pip
+
+> **Após concluir `instalar_windows.bat`, ative o ambiente virtual e execute `python.exe -m pip install --upgrade pip` dentro dele.** A ativação deve acontecer antes da atualização para que o comando utilize o Python do projeto.
+
+No **PowerShell**, abra o terminal na raiz do projeto e use a forma explícita do script de ativação:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python.exe -m pip install --upgrade pip
+```
+
+No **Prompt de Comando do Windows (CMD)**, o comando de ativação solicitado pode ser usado assim:
+
+```cmd
+.\.venv\Scripts\activate
+python.exe -m pip install --upgrade pip
+```
+
+No CMD, o script correspondente é `activate.bat`; no PowerShell, é `Activate.ps1`. Use o bloco correspondente ao terminal aberto.
+
+Quando o ambiente está ativo, o prompt normalmente passa a exibir **`(.venv)`**. Confirme o interpretador e o local do `pip`:
+
+```powershell
+python.exe -c "import sys; print(sys.executable)"
+python.exe -m pip --version
+```
+
+Os caminhos exibidos devem apontar para a pasta **`.venv` deste projeto**. A atualização exige internet e atualiza o gerenciador `pip`; não troca a versão do Python nem atualiza automaticamente Pillow, NumPy ou VTracer.
+
+Esse é um **complemento manual após o instalador**: o `instalar_windows.bat` atual não ativa o ambiente no terminal aberto nem executa esse comando de atualização do `pip`. Depois de concluir o procedimento, abra o aplicativo:
+
+```powershell
+.\iniciar_windows.bat
+```
+
+**A ativação vale para a sessão atual do terminal.** Ao abrir outro terminal, ative novamente a `.venv` para usar comandos como `python.exe` sem o caminho completo. Não é necessário atualizar o `pip` a cada conversão. Para encerrar a ativação, use `deactivate`.
 
 ### Instalação manual com Python 3.12
 
@@ -97,13 +138,15 @@ Abra o PowerShell na pasta do projeto:
 cd "C:\Projetos\Conversor_PNG_SVG"
 
 py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe converter_png_svg.py
+.\.venv\Scripts\Activate.ps1
+python.exe -m pip install --upgrade pip
+python.exe -m pip install -r requirements.txt
+python.exe converter_png_svg.py
 ```
 
 Para usar o mínimo suportado, troque apenas `py -3.12` por `py -3.11` na criação do ambiente. Os demais comandos continuam iguais.
 
-**Não é necessário ativar a `.venv`.** Os exemplos usam diretamente o Python desse ambiente, evitando confusão com outras instalações e com políticas do PowerShell para scripts de ativação.
+**A rotina de instalação documentada inclui a ativação da `.venv`.** Os exemplos de execução nas demais seções também podem usar o caminho explícito `.\.venv\Scripts\python.exe`, que seleciona diretamente o interpretador do projeto, mesmo em uma sessão sem ativação. O `iniciar_windows.bat` já utiliza o Python da `.venv`.
 
 Se a `.venv` já existir, confira sua versão antes de tentar mudar o interpretador:
 
@@ -126,26 +169,38 @@ flowchart TD
     D --> G["Instalar requirements.txt"]
     E --> G
     G --> H{"Instalação concluída?"}
-    H -->|Sim| I["Abrir iniciar_windows.bat"]
+    H -->|Sim| P["Ativar a .venv no terminal"]
+    P --> U["Atualizar pip no ambiente virtual"]
+    U --> Q{"Atualização concluída?"}
+    Q -->|Sim| I["Abrir iniciar_windows.bat"]
+    Q -->|Não| J
     H -->|Não| J["Revisar mensagem de erro"]
 ```
 
-O diagrama representa o comportamento de `instalar_windows.bat`. A instalação manual permite escolher diretamente o Python 3.12.
+O diagrama reúne a execução de `instalar_windows.bat` e o complemento manual de ativação e atualização do `pip`. A instalação manual permite escolher diretamente o Python 3.12.
 
 ## Uso pela interface gráfica
+
+**Para executar no Windows, dê dois cliques em `iniciar_windows.bat`**, dentro da pasta extraída do projeto. Se estiver no PowerShell aberto nessa pasta, use:
+
+```powershell
+.\iniciar_windows.bat
+```
+
+Esse inicializador usa o Python da `.venv`; não é necessário repetir a instalação ou a atualização do `pip` em cada abertura.
 
 Ao abrir o aplicativo, clique em **Selecionar arquivos PNG…** e escolha um ou vários arquivos. Depois, informe a pasta de saída ou deixe esse campo vazio para salvar cada SVG ao lado do respectivo PNG.
 
 Escolha a qualidade e o máximo de cores. Para começar com logotipos semelhantes aos usados na validação, mantenha **qualidade alta** e **8 cores**. Clique em **Converter arquivos** e acompanhe o andamento pela barra de progresso e pelo registro de resultados.
 
-| Controle                     | Comportamento                                                                |
-| ---------------------------- | ---------------------------------------------------------------------------- |
-| Selecionar arquivos PNG      | Define a lista de imagens da próxima conversão                               |
-| Pasta de saída               | Recebe os SVGs; vazia significa usar a pasta de cada PNG                     |
-| Qualidade                    | Define a escala intermediária das máscaras                                   |
-| Máximo de cores              | Limita a paleta entre 1 e 32 cores                                           |
-| Sobrescrever SVGs existentes | Autoriza substituir um destino somente após validar a nova saída             |
-| Registro de resultados       | Mostra o destino, as formas, as cores e o tamanho, ou o erro de cada arquivo |
+| Controle | Comportamento |
+| --- | --- |
+| Selecionar arquivos PNG | Define a lista de imagens da próxima conversão |
+| Pasta de saída | Recebe os SVGs; vazia significa usar a pasta de cada PNG |
+| Qualidade | Define a escala intermediária das máscaras |
+| Máximo de cores | Limita a paleta entre 1 e 32 cores |
+| Sobrescrever SVGs existentes | Autoriza substituir um destino somente após validar a nova saída |
+| Registro de resultados | Mostra o destino, as formas, as cores e o tamanho, ou o erro de cada arquivo |
 
 Os arquivos são processados **sequencialmente**. Uma falha em um arquivo é registrada e o lote continua com os próximos. A barra de progresso avança por arquivo concluído, sem estimar o percentual interno da vetorização de uma imagem.
 
@@ -157,11 +212,11 @@ A interface aguarda o fim do lote antes de permitir o fechamento. O tempo limite
 
 A escala intermediária melhora o ajuste dos contornos, mas não recupera detalhes ausentes na imagem original. A qualidade alta também pode produzir arquivos maiores e exigir mais memória.
 
-| Qualidade na CLI | Escala por dimensão | Pixels intermediários | Limite efetivo de entrada    |
-| ---------------- | ------------------- | --------------------- | ---------------------------- |
-| `rapida`         | 1×                  | 1×                    | Até **20 milhões de pixels** |
-| `equilibrada`    | 2×                  | 4×                    | Até **8 milhões de pixels**  |
-| `alta`           | 4×                  | 16×                   | Até **2 milhões de pixels**  |
+| Qualidade na CLI | Escala por dimensão | Pixels intermediários | Limite efetivo de entrada |
+| --- | --- | --- | --- |
+| `rapida` | 1× | 1× | Até **20 milhões de pixels** |
+| `equilibrada` | 2× | 4× | Até **8 milhões de pixels** |
+| `alta` | 4× | 16× | Até **2 milhões de pixels** |
 
 Esses limites combinam as duas regras do código: até **20 milhões de pixels na entrada** e até **32 milhões após a ampliação**. Pixels são calculados por `largura × altura`, e não pelo tamanho do PNG em megabytes. Os limites não garantem tempo de execução nem consumo fixo de memória.
 
@@ -222,15 +277,15 @@ Esse exemplo considera os arquivos da pasta indicada, sem percorrer subpastas. P
 
 ### Referência dos argumentos
 
-| Argumento        | Padrão           | Finalidade                                      |
-| ---------------- | ---------------- | ----------------------------------------------- |
-| `arquivos`       | Nenhum           | Um ou mais PNGs; sem arquivos, abre a interface |
-| `--saida`        | Pasta da entrada | Pasta dos arquivos SVG                          |
-| `--qualidade`    | `alta`           | `rapida`, `equilibrada` ou `alta`               |
-| `--cores`        | `8`              | Limite inteiro entre `1` e `32`                 |
-| `--sobrescrever` | Desativado       | Autoriza substituir os SVGs existentes          |
-| `--timeout`      | `240`            | Tempo limite positivo por arquivo, em segundos  |
-| `--help` ou `-h` | —                | Mostra a ajuda e encerra                        |
+| Argumento | Padrão | Finalidade |
+| --- | --- | --- |
+| `arquivos` | Nenhum | Um ou mais PNGs; sem arquivos, abre a interface |
+| `--saida` | Pasta da entrada | Pasta dos arquivos SVG |
+| `--qualidade` | `alta` | `rapida`, `equilibrada` ou `alta` |
+| `--cores` | `8` | Limite inteiro entre `1` e `32` |
+| `--sobrescrever` | Desativado | Autoriza substituir os SVGs existentes |
+| `--timeout` | `240` | Tempo limite positivo por arquivo, em segundos |
+| `--help` ou `-h` | — | Mostra a ajuda e encerra |
 
 O código de saída é **0** quando todas as conversões terminam com sucesso e **1** quando alguma conversão falha. Erros de argumentos são tratados pelo `argparse`, com código **2**.
 
@@ -281,21 +336,21 @@ Os temporários são normalmente removidos ao terminar a tentativa. Uma interrup
 
 ## Estrutura do projeto
 
-| Arquivo ou diretório       | Responsabilidade                                                  |
-| -------------------------- | ----------------------------------------------------------------- |
-| `converter_png_svg.py`     | Entrada principal, argumentos e seleção do modo gráfico ou CLI    |
-| `png_svg/gui.py`           | Interface Tkinter, seleção de arquivos, progresso e resultados    |
-| `png_svg/service.py`       | Processo de conversão, timeout e tratamento centralizado de erros |
-| `png_svg/worker.py`        | Recebimento do pedido e devolução do resultado em JSON            |
-| `png_svg/images.py`        | Leitura do PNG, limites de pixels e descoberta da paleta          |
-| `png_svg/vectorizer.py`    | Máscaras por cor e vetorização pelo VTracer                       |
-| `png_svg/svg_files.py`     | Validação estrutural e gravação do SVG                            |
-| `tests/test_conversion.py` | Testes de comportamento e proteção dos arquivos                   |
-| `requirements.txt`         | Versões fixadas das dependências                                  |
-| `instalar_windows.bat`     | Criação da `.venv` e instalação no Windows                        |
-| `iniciar_windows.bat`      | Abertura da interface com o Python do ambiente                    |
-| `VALIDACAO.md`             | Registro técnico da validação inicial                             |
-| `README.md`                | Requisitos, instalação, uso e operação                            |
+| Arquivo ou diretório | Responsabilidade |
+| --- | --- |
+| `converter_png_svg.py` | Entrada principal, argumentos e seleção do modo gráfico ou CLI |
+| `png_svg/gui.py` | Interface Tkinter, seleção de arquivos, progresso e resultados |
+| `png_svg/service.py` | Processo de conversão, timeout e tratamento centralizado de erros |
+| `png_svg/worker.py` | Recebimento do pedido e devolução do resultado em JSON |
+| `png_svg/images.py` | Leitura do PNG, limites de pixels e descoberta da paleta |
+| `png_svg/vectorizer.py` | Máscaras por cor e vetorização pelo VTracer |
+| `png_svg/svg_files.py` | Validação estrutural e gravação do SVG |
+| `tests/test_conversion.py` | Testes de comportamento e proteção dos arquivos |
+| `requirements.txt` | Versões fixadas das dependências |
+| `instalar_windows.bat` | Criação da `.venv` e instalação no Windows |
+| `iniciar_windows.bat` | Abertura da interface com o Python do ambiente |
+| `VALIDACAO.md` | Registro técnico da validação inicial |
+| `README.md` | Requisitos, instalação, uso e operação |
 
 Mantenha a pasta `.venv` específica de cada computador. Para mover o projeto para outra máquina, copie o código e recrie o ambiente usando a instalação.
 
@@ -351,23 +406,24 @@ Posteriormente, em **18/10/2026**, o usuário confirmou o funcionamento do aplic
 
 ## Solução de problemas
 
-| Sintoma ou mensagem                         | Causa provável                                         | Como resolver                                                                                          |
-| ------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| `py` não é reconhecido                      | Python Launcher ausente ou indisponível                | Repare a instalação do Python com Launcher ou crie a `.venv` usando o caminho completo do `python.exe` |
-| Instalador não encontra Python              | Somente outra versão está instalada                    | Instale 3.11 ou 3.12, ou selecione explicitamente um interpretador compatível na instalação manual     |
-| Falha ao instalar NumPy                     | Python abaixo do mínimo ou distribuição incompatível   | Confira a versão e use CPython 3.11 ou 3.12 de 64 bits                                                 |
-| `No module named PIL`, `numpy` ou `vtracer` | Ambiente errado ou instalação incompleta               | Execute o `pip install -r requirements.txt` pelo Python da `.venv`                                     |
-| `No module named png_svg`                   | Pasta do pacote ausente ou código copiado parcialmente | Extraia o ZIP completo e preserve a estrutura original                                                 |
-| Erro de Tkinter ou Tcl/Tk                   | Componente gráfico ausente                             | Repare a instalação do Python com suporte Tcl/Tk; a CLI pode ser usada sem a interface                 |
-| Interface não abre ou fecha imediatamente   | Erro fica oculto ao iniciar com `pythonw.exe`          | Abra pelo terminal com o comando abaixo para visualizar o diagnóstico                                  |
-| `O destino já existe`                       | Sobrescrita desativada                                 | Escolha outro destino ou autorize sobrescrever a saída                                                 |
-| Erro de hard link                           | Pasta sem suporte ou permissão para esse recurso       | Use uma pasta local NTFS; o modo de sobrescrita usa outro mecanismo de publicação                      |
-| `PermissionError`                           | Pasta sem permissão ou destino bloqueado               | Escolha uma pasta gravável e verifique se o arquivo está bloqueado por outro programa                  |
-| `Imagem acima do limite de pixels`          | A resolução excede o limite da qualidade escolhida     | Troque de `alta` para `equilibrada` ou `rapida`, ou reduza a imagem                                    |
-| `Tempo limite ... excedido`                 | Vetorização não terminou no prazo                      | Reduza qualidade ou cores; pela CLI, aumente `--timeout`                                               |
-| SVG parece vazio                            | Arte branca aberta sobre fundo branco                  | Visualize o arquivo sobre um fundo escuro                                                              |
-| `não contém pixels ...`                     | Nenhum pixel atinge o limiar de opacidade              | Verifique a opacidade do PNG e exporte uma versão adequada ao limiar usado                             |
-| Cores ou contornos diferentes do esperado   | Simplificação da paleta ou limites do traçado          | Revise a qualidade, o máximo de cores e a imagem de origem; ajustes manuais podem ser necessários      |
+| Sintoma ou mensagem | Causa provável | Como resolver |
+| --- | --- | --- |
+| `py` não é reconhecido | Python Launcher ausente ou indisponível | Repare a instalação do Python com Launcher ou crie a `.venv` usando o caminho completo do `python.exe` |
+| Instalador não encontra Python | Somente outra versão está instalada | Instale 3.11 ou 3.12, ou selecione explicitamente um interpretador compatível na instalação manual |
+| Falha ao instalar NumPy | Python abaixo do mínimo ou distribuição incompatível | Confira a versão e use CPython 3.11 ou 3.12 de 64 bits |
+| `No module named PIL`, `numpy` ou `vtracer` | Ambiente errado ou instalação incompleta | Execute o `pip install -r requirements.txt` pelo Python da `.venv` |
+| `No module named png_svg` | Pasta do pacote ausente ou código copiado parcialmente | Extraia o ZIP completo e preserve a estrutura original |
+| Erro de Tkinter ou Tcl/Tk | Componente gráfico ausente | Repare a instalação do Python com suporte Tcl/Tk; a CLI pode ser usada sem a interface |
+| PowerShell bloqueia `Activate.ps1` | Política de execução de scripts | Use o Prompt de Comando com `.\.venv\Scripts\activate.bat` ou execute o Python pelo caminho completo `.\.venv\Scripts\python.exe`; não é necessário alterar a política para usar esse caminho explícito |
+| Interface não abre ou fecha imediatamente | Erro fica oculto ao iniciar com `pythonw.exe` | Abra pelo terminal com o comando abaixo para visualizar o diagnóstico |
+| `O destino já existe` | Sobrescrita desativada | Escolha outro destino ou autorize sobrescrever a saída |
+| Erro de hard link | Pasta sem suporte ou permissão para esse recurso | Use uma pasta local NTFS; o modo de sobrescrita usa outro mecanismo de publicação |
+| `PermissionError` | Pasta sem permissão ou destino bloqueado | Escolha uma pasta gravável e verifique se o arquivo está bloqueado por outro programa |
+| `Imagem acima do limite de pixels` | A resolução excede o limite da qualidade escolhida | Troque de `alta` para `equilibrada` ou `rapida`, ou reduza a imagem |
+| `Tempo limite ... excedido` | Vetorização não terminou no prazo | Reduza qualidade ou cores; pela CLI, aumente `--timeout` |
+| SVG parece vazio | Arte branca aberta sobre fundo branco | Visualize o arquivo sobre um fundo escuro |
+| `não contém pixels ...` | Nenhum pixel atinge o limiar de opacidade | Verifique a opacidade do PNG e exporte uma versão adequada ao limiar usado |
+| Cores ou contornos diferentes do esperado | Simplificação da paleta ou limites do traçado | Revise a qualidade, o máximo de cores e a imagem de origem; ajustes manuais podem ser necessários |
 
 Para investigar uma falha de inicialização:
 
@@ -393,13 +449,13 @@ Esse último comando deve abrir a janela de demonstração do Tkinter.
 
 ## Dependências e referências
 
-| Dependência                                         | Versão no pacote                           | Uso                                                 |
-| --------------------------------------------------- | ------------------------------------------ | --------------------------------------------------- |
-| [Pillow](https://pypi.org/project/pillow/12.3.0/)   | `12.3.0`                                   | Leitura, validação e redimensionamento das máscaras |
-| [NumPy](https://pypi.org/project/numpy/2.3.5/)      | `2.3.5`                                    | Paleta, classificação de pixels e máscaras          |
-| [VTracer](https://pypi.org/project/vtracer/0.6.15/) | `0.6.15`                                   | Traçado de contornos em caminhos vetoriais          |
-| Tkinter                                             | Incluído na distribuição Python com Tcl/Tk | Interface gráfica                                   |
-| Biblioteca padrão Python                            | Incluída no Python                         | CLI, processos, XML, temporários e testes           |
+| Dependência | Versão no pacote | Uso |
+| --- | --- | --- |
+| [Pillow](https://pypi.org/project/pillow/12.3.0/) | `12.3.0` | Leitura, validação e redimensionamento das máscaras |
+| [NumPy](https://pypi.org/project/numpy/2.3.5/) | `2.3.5` | Paleta, classificação de pixels e máscaras |
+| [VTracer](https://pypi.org/project/vtracer/0.6.15/) | `0.6.15` | Traçado de contornos em caminhos vetoriais |
+| Tkinter | Incluído na distribuição Python com Tcl/Tk | Interface gráfica |
+| Biblioteca padrão Python | Incluída no Python | CLI, processos, XML, temporários e testes |
 
 As versões fixadas reproduzem o conjunto usado na implementação. Atualizações de dependências devem ser acompanhadas da execução dos testes e de uma comparação visual com imagens de referência. CairoSVG foi usado na inspeção das saídas durante a validação; não é uma dependência de execução do aplicativo.
 
